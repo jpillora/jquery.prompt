@@ -1,0 +1,10 @@
+{
+  "title": "jQuery Prompt",
+  "name": "jquery.prompt",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jaime Pillora"
+  },
+  "homepage": "https://github.com/jpillora/jquery.prompt",
+  "license": "MIT"
+}
