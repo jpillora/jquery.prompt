@@ -1,8 +1,10 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
+
   // Project configuration.
   grunt.initConfig({
+
     pkg: '<json:component.json>',
     meta: {
       banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
@@ -10,6 +12,16 @@ module.exports = function(grunt) {
         '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
         '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
         ' Licensed <%= pkg.license %> */'
+    },
+    stylus: {
+      compile: {
+        options: {
+          compress: true
+        },
+        files: {
+          'dist/*.css': ['src/*.styl'] 
+        }
+      }
     },
     concat: {
       dist: {
@@ -51,7 +63,10 @@ module.exports = function(grunt) {
     uglify: {}
   });
 
+  // Plugins
+  grunt.loadNpmTasks('grunt-contrib-stylus');
+
   // Default task.
-  grunt.registerTask('default', 'lint concat min');
+  grunt.registerTask('default', 'stylus lint concat min');
 
 };
