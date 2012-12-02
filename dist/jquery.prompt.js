@@ -1,38 +1,10 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-02
+/*! jQuery Prompt - v1.0.0 - 2012-12-03
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
 $(function() {
 
-  var options = {
-    // Auto-hide prompt
-    autoHidePrompt: false,
-    // Delay before auto-hide
-    autoHideDelay: 10000,
-    // set to true, when the prompt arrow needs to be displayed
-    showArrow: true,
-    // Fade out duration while hiding the validations
-    fadeDuration: 600,
-    // Gap between prompt and element
-    gap: 0,
-    // Opacities
-    hiddenOpacity: 0,
-    shownOpacity: 0.87
-    //TODO add z-index watches
-    //parents:  { '.ui-dialog': 5001 }
-  };
-
-  //change options
-  function setDefaults(userOptions) {
-    $.extend(options, userOptions);
-  }
-
-  //permanent hide listener
-  $(document).on("click", ".formError", function() {
-    showElem($(this),false);
-  });
-
-  //build arrow
+  //plugin variables 
   var arrowHtml = (function() {
     var i, a = [];
     a.push('<div class="formErrorArrow">');
@@ -50,38 +22,64 @@ $(function() {
     return a.join('');
   }());
 
+
+  var pluginOptions = {
+    // Auto-hide prompt
+    autoHidePrompt: false,
+    // Delay before auto-hide
+    autoHideDelay: 10000,
+    // Should display little arrow
+    showArrow: true,
+    // Animation methods
+    showAnimation: 'fadeIn',
+    hideAnimation: 'fadeOut', 
+    // Fade out duration while hiding the validations
+    animationDuration: 600,
+    // Gap between prompt and element
+    gap: 0
+    //TODO add z-index watches
+    //parents:  { '.ui-dialog': 5001 }
+  };
+
+  // plugin helpers
+  function CustomOptions(options){
+    $.extend(this, options);
+  }
+  CustomOptions.prototype = pluginOptions;
+
+
+  function create(tag) {
+    return $(document.createElement(tag));
+  }
+
+
   /**
   * Builds or updates a prompt with the given information
   */
-  function execPrompt(element, text, opts) {
+  function execPrompt(initialElement, text, userOptions) {
 
-    var fieldType = element.attr("type"),
-        field = getPromptField(element),
-        prompt = field.data("promptElement"),
-        showArrow = options.showArrow && fieldType !== 'radio',
+    var elementType = initialElement.attr("type"),
+        element = getPromptElement(initialElement),
+        prompt = element.data("promptElement"),
+        options = element.data("promptOptions") || new CustomOptions(userOptions),
+        showArrow = options.showArrow && elementType !== 'radio',
         content = null,
         arrow = null,
         type = null;
 
-    //apply options
-    if($.isPlainObject(opts)) {
-      type = opts.type;
-
-      if(opts.arrow) showArrow = opts.arrow;
-
-    } else {
-      type = opts;
-      opts = null;
+    //shortcut special case
+    if($.type(userOptions) === 'string') {
+      type = userOptions;
     }
 
     if(prompt &&!text)
-      return showElem(prompt, false); //hide
+      return showPrompt(prompt, false); //hide
     else if(!prompt &&!text)
-      return; //nothing to hide
+      return;
 
     //no prompt - build
     if(!prompt)
-      prompt = buildPrompt(field);
+      prompt = buildPrompt(element, options);
 
     content = prompt.find('.formErrorContent:first');
     arrow = prompt.find('.formErrorArrow:first');
@@ -97,102 +95,87 @@ $(function() {
     else if (type === "load") prompt.addClass("blackPopup");
     else                     prompt.addClass("redPopup");
 
-    clearTimeout(field.data('promptTimer'));
+    clearTimeout(element.data('promptTimer'));
     if (options.autoHidePrompt) {
       var t = setTimeout(function(){
-        showElem(prompt,false);
+        showPrompt(prompt,false);
       }, options.autoHideDelay);
-      field.data('promptTimer', t);
+      element.data('promptTimer', t);
     }
 
-    showElem(prompt,true);
+    showPrompt(prompt,true);
 
-    return field;
+    return element;
   }
 
-  function create(tag) {
-    return $(document.createElement(tag));
-  }
+  //construct dom to represent prompt, done once
+  function buildPrompt(element, options) {
 
-  function buildPrompt(field) {
+    var promptWrapper = create('div').addClass("formErrorWrapper"),
+        prompt = create('div').addClass("formError"),
+        content = create('div').addClass("formErrorContent");
 
-      var promptWrapper = create('div').addClass("formErrorWrapper"),
-          prompt = create('div').addClass("formError"),
-          content = create('div').addClass("formErrorContent");
+    //cache in element
+    element.data("promptElement", prompt);
+    element.data("promptOptions", options);
 
-      promptWrapper.append(prompt);
+    promptWrapper.append(prompt);
 
-      if(field.parent().css('position') === 'relative') {
-        promptWrapper.css({position:'absolute'});
-      }
+    if(element.parent().css('position') === 'relative')
+      promptWrapper.css({position:'absolute'});
 
-      prompt.append($(arrowHtml));
+    prompt.append(arrowHtml);
+    prompt.append(content);
 
-      prompt.append(content);
+    //add into dom
+    element.before(promptWrapper);
+    prompt.css(calculateCSS(element, prompt));
 
-      //add into dom
-      field.before(promptWrapper);
-      //cache in field
-      field.data("promptElement", prompt);
-
-      var css = calculateCSS(field, prompt);
-      css.opacity = options.hiddenOpacity;
-      prompt.css(css);
-
-      return prompt;
+    return prompt;
   }
 
   //basic hide show
-  function showElem(elem, show) {
-    if(show) elem.show();
-    elem.stop().fadeTo(options.fadeDuration,
-      show ? options.shownOpacity : options.hiddenOpacity,
-      function() {
-        if(!show) elem.hide();
-      }
-    );
+  function showPrompt(element, show) {
+    if(show) element.show();
+
+    var options = element.data("promptOptions");
+
+    var method = show ? options.showAnimation : options.hideAnimation;
+    element.stop()[method](options.animationDuration, function() {
+      if(!show) element.hide();
+    });
   }
 
-  /**
-  *
-  */
-  function getPromptField(f) {
+  //gets first on n radios, and gets the fancy stylised input for hidden inputs
+  function getPromptElement(element) {
     //choose the first of n radios
-    if(f.is('[type=radio]')) {
-      var radios = f.parents("form:first").find('[type=radio]').filter(function(i,e) {
-        return $(e).attr('name') === f.attr('name');
+    if(element.is('[type=radio]')) {
+      var radios = element.parents("form:first").find('[type=radio]').filter(function(i,e) {
+        return $(e).attr('name') === element.attr('name');
       });
-      f = radios.first();
+      element = radios.first();
     }
 
     //custom-styled inputs - find thier real element
-    var fBefore = f.prev();
+    var fBefore = element.prev();
     if(fBefore.is('span.styled,span.OBS_checkbox'))
-      f = fBefore;
+      element = fBefore;
 
-    return f;
+    return element;
   }
 
   /**
   * Calculates prompt position
-  *
-  * @param {jqObject}
-  *            field
-  * @param {jqObject}
-  *            the prompt
-  * @param {Map}
-  *            options
-  * @return positions
   */
-  function calculateCSS(field, prompt) {
+  function calculateCSS(element, prompt) {
 
-    var fieldPosition = field.position(),
+    var elementPosition = element.position(),
         promptPosition = prompt.parent().position(),
-        height = field.outerHeight(),
-        left = fieldPosition.left - promptPosition.left;
+        height = element.outerHeight(),
+        left = elementPosition.left - promptPosition.left;
 
     if(!$.browser.msie)
-      height += (fieldPosition.top - promptPosition.top);
+      height += (elementPosition.top - promptPosition.top);
 
     return {
       top: height-2,
@@ -201,12 +184,20 @@ $(function() {
 
   }
 
+
+  //permanent hide listener
+  $(document).on("click", ".formError", function() {
+    showPrompt($(this),false);
+  });
+
   //public interface
   $.prompt = execPrompt;
-  $.prompt.setDefaults = setDefaults;
+  $.prompt.options = function(userOptions) {
+    $.extend(pluginOptions, userOptions);
+  };
 
   $.fn.prompt = function(text, opts) {
-    buildPrompt($(this), text, opts);
+    execPrompt($(this), text, opts);
   };
 
 });
