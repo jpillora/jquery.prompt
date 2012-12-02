@@ -1,4 +1,4 @@
-/*! jQuery Prompt - v1.0.0 - 2012-11-30
+/*! jQuery Prompt - v1.0.0 - 2012-12-02
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
@@ -53,7 +53,7 @@ $(function() {
   /**
   * Builds or updates a prompt with the given information
   */
-  function build(element, text, opts) {
+  function execPrompt(element, text, opts) {
 
     var fieldType = element.attr("type"),
         field = getPromptField(element),
@@ -202,7 +202,7 @@ $(function() {
   }
 
   //public interface
-  $.prompt = buildPrompt;
+  $.prompt = execPrompt;
   $.prompt.setDefaults = setDefaults;
 
   $.fn.prompt = function(text, opts) {

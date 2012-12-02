@@ -49,7 +49,7 @@ $(function() {
   /**
   * Builds or updates a prompt with the given information
   */
-  function build(element, text, opts) {
+  function execPrompt(element, text, opts) {
 
     var fieldType = element.attr("type"),
         field = getPromptField(element),
@@ -198,7 +198,7 @@ $(function() {
   }
 
   //public interface
-  $.prompt = buildPrompt;
+  $.prompt = execPrompt;
   $.prompt.setDefaults = setDefaults;
 
   $.fn.prompt = function(text, opts) {

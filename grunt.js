@@ -24,14 +24,14 @@ module.exports = function(grunt) {
       }
     },
     concat: {
-      dist: {
+      vanilla: {
         src: ['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
     min: {
-      dist: {
-        src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
+      vanilla: {
+        src: ['<banner:meta.banner>', '<config:concat.vanilla.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },

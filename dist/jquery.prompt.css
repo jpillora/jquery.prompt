@@ -1,35 +1,17 @@
-.formErrorWrapper{overflow:visible;height:0;width:0;position:relative;display:inline-block;vertical-align:top;top:30px;left:0}
-.radioInputWrapper .formErrorWrapper{top:18px;left:-65px}
-.checkboxInputWrapper .formErrorWrapper{top:26px;left:-43px}
-.formErrorInsideDialog.formError{z-index:5000;}
-.formErrorInsideDialog.formError .formErrorContent{z-index:5001}
-.formError.redPopup{$red:#ee0101;}
-.formError.redPopup .formErrorContent{color:$red;border:2px solid $red}
-.formError.redPopup .formErrorArrow div{background:$red}
-.formError.greenPopup{$green:#33be40;}
-.formError.greenPopup .formErrorContent{color:$green;border:2px solid $green}
-.formError.greenPopup .formErrorArrow div{background:$green}
-.formError.blackPopup{$black:#393939;}
-.formError.blackPopup .formErrorContent{color:$black;border:2px solid $black}
-.formError.blackPopup .formErrorArrow div{background:$black}
-.formError{z-index:990;top:30px;position:absolute;display:block;cursor:pointer;font-family:Tahoma;}
-.formError .formErrorContent{z-index:991}
-.formError .formErrorArrow{z-index:996}
+.formErrorWrapper{z-index:1 !important;overflow:visible;height:0;width:0;position:absolute;display:inline-block;vertical-align:top}
+.formError{z-index:1 !important;position:absolute;display:block;cursor:pointer;}
+.formError .formErrorArrow{z-index:2 !important}
+.formError.redPopup .formErrorContent{color:#ee0101;border:2px solid #ee0101}
+.formError.redPopup .formErrorArrow div{background:#ee0101}
+.formError.greenPopup .formErrorContent{color:#33be40;border:2px solid #33be40}
+.formError.greenPopup .formErrorArrow div{background:#33be40}
+.formError.blackPopup .formErrorContent{color:#393939;border:2px solid #393939}
+.formError.blackPopup .formErrorArrow div{background:#393939}
 .formError .inputContainer{position:relative;float:left}
 .formError .ajaxSubmit{padding:20px;background:#55ea55;border:1px solid #999;display:none}
-.formError .formErrorContent{width:100%;background:#fff;position:relative;width:150px;font-size:11px;box-shadow:0 0 6px #000;-moz-box-shadow:0 0 6px #000;-webkit-box-shadow:0 0 6px #000;padding:4px 10px 4px 10px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px}
-.formError .formErrorArrow{width:15px;margin:-2px 0 0 13px;position:relative}
-.formError .formErrorArrow div{border-left:2px solid #ddd;border-right:2px solid #ddd;box-shadow:0 2px 3px #444;-moz-box-shadow:0 2px 3px #444;-webkit-box-shadow:0 2px 3px #444;font-size:0;height:1px;margin:0 auto;line-height:0;font-size:0;display:block}
-.formError .formErrorArrowBottom{box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;margin:0 0 0 12px;top:2px}
-.formError .formErrorArrowBottom div{box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none}
-.formError .formErrorArrow .line10{width:15px;border:none}
-.formError .formErrorArrow .line9{width:13px;border:none}
-.formError .formErrorArrow .line8{width:11px}
-.formError .formErrorArrow .line7{width:9px}
-.formError .formErrorArrow .line6{width:7px}
-.formError .formErrorArrow .line5{width:5px}
-.formError .formErrorArrow .line4{width:3px}
-.formError .formErrorArrow .line3{width:1px;border-left:2px solid #ddd;border-right:2px solid #ddd;border-bottom:0 solid #ddd}
-.formError .formErrorArrow .line2{display:none}
-.formError .formErrorArrow .line1{display:none}
+.formError .formErrorContent{background:#fff;position:relative;font-size:11px;box-shadow:0 0 6px #000;-moz-box-shadow:0 0 6px #000;-webkit-box-shadow:0 0 6px #000;padding:4px 10px 4px 8px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;white-space:nowrap}
+.formError .formErrorArrow{opacity:.87;width:15px;margin:-2px 0 0 13px;position:relative;}
+.formError .formErrorArrow.invisible div,.formError .formErrorArrow div.invisible{background:none}
+.formError .formErrorArrow div{border:none;font-size:0;height:1px;margin:0 auto;line-height:0;font-size:0;display:block;}
+.formError .formErrorArrow div.shadow{box-shadow:0 2px 6px #444;-moz-box-shadow:0 2px 6px #444;-webkit-box-shadow:0 2px 6px #444}
 body[dir='rtl'] .formError .formErrorArrow,body.rtl .formError .formErrorArrow{margin:-2px 13px 0 0}
