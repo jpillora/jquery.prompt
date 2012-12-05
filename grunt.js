@@ -19,7 +19,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          'dist/*.css': ['src/*.styl'] 
+          'dist/*.css': ['src/*.styl']
         }
       }
     },
@@ -38,9 +38,15 @@ module.exports = function(grunt) {
     lint: {
       files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
     },
+
     watch: {
-      files: '<config:lint.files>',
-      tasks: 'lint'
+      scripts: {
+        files: '<config:lint.files>',
+        tasks: 'default',
+        options: {
+          debounceDelay: 1000
+        }
+      }
     },
     jshint: {
       options: {
@@ -59,14 +65,17 @@ module.exports = function(grunt) {
         jQuery: true,
         "$": true
       }
-    },
-    uglify: {}
+    }
   });
 
   // Plugins
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-mocha');
 
   // Default task.
   grunt.registerTask('default', 'stylus lint concat min');
+  grunt.renameTask('watch', 'real-watch');
+  grunt.registerTask('watch', 'default real-watch');
 
 };

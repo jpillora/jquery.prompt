@@ -1,4 +1,4 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-03
+/*! jQuery Prompt - v1.0.0 - 2012-12-05
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
@@ -21,7 +21,6 @@ $(function() {
     a.push('</div>');
     return a.join('');
   }());
-
 
   var pluginOptions = {
     // Auto-hide prompt
@@ -61,7 +60,7 @@ $(function() {
     var elementType = initialElement.attr("type"),
         element = getPromptElement(initialElement),
         prompt = element.data("promptElement"),
-        options = element.data("promptOptions") || new CustomOptions(userOptions),
+        options = (prompt && prompt.data("promptOptions")) || new CustomOptions(userOptions),
         showArrow = options.showArrow && elementType !== 'radio',
         content = null,
         arrow = null,
@@ -80,7 +79,7 @@ $(function() {
     //no prompt - build
     if(!prompt)
       prompt = buildPrompt(element, options);
-
+    
     content = prompt.find('.formErrorContent:first');
     arrow = prompt.find('.formErrorArrow:first');
 
@@ -117,7 +116,7 @@ $(function() {
 
     //cache in element
     element.data("promptElement", prompt);
-    element.data("promptOptions", options);
+    prompt.data("promptOptions", options);
 
     promptWrapper.append(prompt);
 

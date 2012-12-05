@@ -18,7 +18,6 @@ $(function() {
     return a.join('');
   }());
 
-
   var pluginOptions = {
     // Auto-hide prompt
     autoHidePrompt: false,
@@ -57,7 +56,7 @@ $(function() {
     var elementType = initialElement.attr("type"),
         element = getPromptElement(initialElement),
         prompt = element.data("promptElement"),
-        options = element.data("promptOptions") || new CustomOptions(userOptions),
+        options = (prompt && prompt.data("promptOptions")) || new CustomOptions(userOptions),
         showArrow = options.showArrow && elementType !== 'radio',
         content = null,
         arrow = null,
@@ -76,7 +75,7 @@ $(function() {
     //no prompt - build
     if(!prompt)
       prompt = buildPrompt(element, options);
-
+    
     content = prompt.find('.formErrorContent:first');
     arrow = prompt.find('.formErrorArrow:first');
 
@@ -113,7 +112,7 @@ $(function() {
 
     //cache in element
     element.data("promptElement", prompt);
-    element.data("promptOptions", options);
+    prompt.data("promptOptions", options);
 
     promptWrapper.append(prompt);
 

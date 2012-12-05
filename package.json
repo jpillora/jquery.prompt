@@ -1,5 +1,10 @@
 {
   "name": "jquery.prompt",
   "version": "1.0.0",
-  "dependencies": "grunt-contrib-stylus"
+  "dependencies":[
+    "grunt-contrib-stylus",
+    "grunt-contrib-uglify",
+    "grunt-contrib-watch",
+    "grunt-mocha"
+  ]
 }
