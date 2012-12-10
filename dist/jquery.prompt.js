@@ -1,10 +1,10 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-05
+/*! jQuery Prompt - v1.0.0 - 2012-12-10
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
 $(function() {
 
-  //plugin variables 
+  //plugin variables
   var arrowHtml = (function() {
     var i, a = [];
     a.push('<div class="formErrorArrow">');
@@ -31,7 +31,7 @@ $(function() {
     showArrow: true,
     // Animation methods
     showAnimation: 'fadeIn',
-    hideAnimation: 'fadeOut', 
+    hideAnimation: 'fadeOut',
     // Fade out duration while hiding the validations
     animationDuration: 600,
     // Gap between prompt and element
@@ -52,6 +52,12 @@ $(function() {
   }
 
 
+  function execPromptEach(initialElements, text, userOptions) {
+    initialElements.each(function() {
+      execPrompt($(this), text, userOptions);
+    });
+  }
+
   /**
   * Builds or updates a prompt with the given information
   */
@@ -71,9 +77,10 @@ $(function() {
       type = userOptions;
     }
 
-    if(prompt &&!text)
-      return showPrompt(prompt, false); //hide
-    else if(!prompt &&!text)
+    if(prompt && !text) {
+      showPrompt(prompt, false); //hide
+      return;
+    } else if(!prompt &&!text)
       return;
 
     //no prompt - build
@@ -103,8 +110,6 @@ $(function() {
     }
 
     showPrompt(prompt,true);
-
-    return element;
   }
 
   //construct dom to represent prompt, done once
@@ -190,13 +195,14 @@ $(function() {
   });
 
   //public interface
-  $.prompt = execPrompt;
+  $.prompt = execPromptEach;
   $.prompt.options = function(userOptions) {
     $.extend(pluginOptions, userOptions);
   };
 
   $.fn.prompt = function(text, opts) {
-    execPrompt($(this), text, opts);
+    execPromptEach($(this), text, opts);
+    return $(this);
   };
 
 });
