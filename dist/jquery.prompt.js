@@ -1,4 +1,4 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-10
+/*! jQuery Prompt - v1.0.0 - 2012-12-14
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
@@ -33,7 +33,8 @@ $(function() {
     showAnimation: 'fadeIn',
     hideAnimation: 'fadeOut',
     // Fade out duration while hiding the validations
-    animationDuration: 600,
+    showDuration: 200,
+    hideDuration: 600,
     // Gap between prompt and element
     gap: 0
     //TODO add z-index watches
@@ -116,12 +117,13 @@ $(function() {
   function buildPrompt(element, options) {
 
     var promptWrapper = create('div').addClass("formErrorWrapper"),
-        prompt = create('div').addClass("formError"),
+        prompt = create('div').addClass("formError").hide(),
         content = create('div').addClass("formErrorContent");
 
     //cache in element
     element.data("promptElement", prompt);
     prompt.data("promptOptions", options);
+    prompt.data("parentElement", element);
 
     promptWrapper.append(prompt);
 
@@ -138,16 +140,23 @@ $(function() {
     return prompt;
   }
 
-  //basic hide show
-  function showPrompt(element, show) {
-    if(show) element.show();
 
-    var options = element.data("promptOptions");
+  function showPrompt(prompt, show) {
+    var hidden = prompt.data("parentElement").parents(":hidden").length > 0,
+        options = prompt.data("promptOptions");
 
-    var method = show ? options.showAnimation : options.hideAnimation;
-    element.stop()[method](options.animationDuration, function() {
-      if(!show) element.hide();
-    });
+    if (hidden && show) {
+      prompt.show();
+    }
+    if (hidden && !show) {
+      prompt.hide();
+    }
+    if (!hidden && show) {
+      prompt[options.showAnimation](options.showDuration);
+    }
+    if (!hidden && !show) {
+      return prompt[options.hideAnimation](options.hideDuration);
+    }
   }
 
   //gets first on n radios, and gets the fancy stylised input for hidden inputs
