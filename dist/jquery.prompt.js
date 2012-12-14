@@ -1,10 +1,10 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-05
+/*! jQuery Prompt - v1.0.0 - 2012-12-14
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
 $(function() {
 
-  //plugin variables 
+  //plugin variables
   var arrowHtml = (function() {
     var i, a = [];
     a.push('<div class="formErrorArrow">');
@@ -31,9 +31,10 @@ $(function() {
     showArrow: true,
     // Animation methods
     showAnimation: 'fadeIn',
-    hideAnimation: 'fadeOut', 
+    hideAnimation: 'fadeOut',
     // Fade out duration while hiding the validations
-    animationDuration: 600,
+    showDuration: 200,
+    hideDuration: 600,
     // Gap between prompt and element
     gap: 0
     //TODO add z-index watches
@@ -42,7 +43,8 @@ $(function() {
 
   // plugin helpers
   function CustomOptions(options){
-    $.extend(this, options);
+    if($.isPlainObject(options))
+      $.extend(this, options);
   }
   CustomOptions.prototype = pluginOptions;
 
@@ -51,6 +53,12 @@ $(function() {
     return $(document.createElement(tag));
   }
 
+
+  function execPromptEach(initialElements, text, userOptions) {
+    initialElements.each(function() {
+      execPrompt($(this), text, userOptions);
+    });
+  }
 
   /**
   * Builds or updates a prompt with the given information
@@ -69,11 +77,14 @@ $(function() {
     //shortcut special case
     if($.type(userOptions) === 'string') {
       type = userOptions;
+    } else if (options.type) {
+      type = options.type;
     }
 
-    if(prompt &&!text)
-      return showPrompt(prompt, false); //hide
-    else if(!prompt &&!text)
+    if(prompt && !text) {
+      showPrompt(prompt, false); //hide
+      return;
+    } else if(!prompt &&!text)
       return;
 
     //no prompt - build
@@ -103,20 +114,19 @@ $(function() {
     }
 
     showPrompt(prompt,true);
-
-    return element;
   }
 
   //construct dom to represent prompt, done once
   function buildPrompt(element, options) {
 
     var promptWrapper = create('div').addClass("formErrorWrapper"),
-        prompt = create('div').addClass("formError"),
+        prompt = create('div').addClass("formError").hide(),
         content = create('div').addClass("formErrorContent");
 
     //cache in element
     element.data("promptElement", prompt);
     prompt.data("promptOptions", options);
+    prompt.data("parentElement", element);
 
     promptWrapper.append(prompt);
 
@@ -133,16 +143,23 @@ $(function() {
     return prompt;
   }
 
-  //basic hide show
-  function showPrompt(element, show) {
-    if(show) element.show();
 
-    var options = element.data("promptOptions");
+  function showPrompt(prompt, show) {
+    var hidden = prompt.data("parentElement").parents(":hidden").length > 0,
+        options = prompt.data("promptOptions");
 
-    var method = show ? options.showAnimation : options.hideAnimation;
-    element.stop()[method](options.animationDuration, function() {
-      if(!show) element.hide();
-    });
+    if (hidden && show) {
+      prompt.show();
+    }
+    if (hidden && !show) {
+      prompt.hide();
+    }
+    if (!hidden && show) {
+      prompt[options.showAnimation](options.showDuration);
+    }
+    if (!hidden && !show) {
+      return prompt[options.hideAnimation](options.hideDuration);
+    }
   }
 
   //gets first on n radios, and gets the fancy stylised input for hidden inputs
@@ -190,13 +207,14 @@ $(function() {
   });
 
   //public interface
-  $.prompt = execPrompt;
+  $.prompt = execPromptEach;
   $.prompt.options = function(userOptions) {
     $.extend(pluginOptions, userOptions);
   };
 
   $.fn.prompt = function(text, opts) {
-    execPrompt($(this), text, opts);
+    execPromptEach($(this), text, opts);
+    return $(this);
   };
 
 });

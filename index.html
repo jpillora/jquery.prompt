@@ -1,9 +1,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <!-- jQuery Prompt -->
-<script src="//raw.github.com/jpillora/jquery.prompt/master/dist/jquery.prompt.min.js"></script>
+<script src="dist/jquery.prompt.js"></script>
 <!-- jQuery Prompt stylesheet -->
-<link href="//raw.github.com/jpillora/jquery.prompt/master/dist/jquery.prompt.css" rel="stylesheet" type="text/css" >
+<link href="dist/jquery.prompt.css" rel="stylesheet" type="text/css" >
  
 <form>
   <input id="one" value="42" data-validate="number"/>
@@ -13,7 +13,13 @@
 
 <script>
   $(function() {
-    $("one").prompt("hello");
-    $("two").prompt("world");
+
+    setTimeout(function() {
+      $("#one").prompt("hello");
+    }, 500);
+    setTimeout(function() {
+      $.prompt($("#two"),"world","load");
+    }, 1500);
+
   });
 </script>
