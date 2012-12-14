@@ -43,7 +43,8 @@ $(function() {
 
   // plugin helpers
   function CustomOptions(options){
-    $.extend(this, options);
+    if($.isPlainObject(options))
+      $.extend(this, options);
   }
   CustomOptions.prototype = pluginOptions;
 
@@ -76,6 +77,8 @@ $(function() {
     //shortcut special case
     if($.type(userOptions) === 'string') {
       type = userOptions;
+    } else if (options.type) {
+      type = options.type;
     }
 
     if(prompt && !text) {
