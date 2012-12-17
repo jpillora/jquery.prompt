@@ -11,44 +11,11 @@
 .jqPrompt {
   /* Z-INDEX */
   z-index: 1 !important;
-  .jqPromptArrow { z-index: 2 !important; }
 
   position: absolute;
   display: block;
   cursor: pointer;
 
-  &.redPopup {
-    $red = #ee0101;
-    .jqPromptContent {
-      color: $red;
-      border: 2px solid $red;
-    }
-    .jqPromptArrow div {
-      background: $red;
-    }
-  }
-
-  &.greenPopup {
-    $green = #33be40;
-    .jqPromptContent {
-      color: $green;
-      border: 2px solid $green;
-    }
-    .jqPromptArrow div {
-      background: $green;
-    }
-  }
-
-  &.blackPopup {
-    $black = #393939;
-    .jqPromptContent {
-      color: $black;
-      border: 2px solid $black;
-    }
-    .jqPromptArrow div {
-      background: $black;
-    }
-  }
 
   .jqPromptContent {
     background: #fff;

@@ -1,44 +1,46 @@
 
 (function() {
 
-  var className = "jqPrompt";
-
   //plugin variables
-  var arrowHtml = (function() {
-    var i, a = [];
-    a.push('<div class="' + className + 'Arrow">');
-    //3 blank divs for IE bug
-    for(i = 0; i<3; ++i)
-      a.push('<div class="invisible"></div>');
-    for(i = 0; i<6; ++i) {
-      a.push('<div class="line');
-      if(i < 4) a.push(' shadow');
-      a.push('" style="width:');
-      a.push((2*i)+1);
-      a.push('px;"><!-- --></div>');
-    }
-    a.push('</div>');
-    return a.join('');
-  }());
+  var className = "jqPrompt",
+    arrowDirs = {
+      top: "bottom",
+      bottom: "top",
+      left: "right",
+      right: "left"
+    },
+    //overridable options
+    pluginOptions = {
+      // Auto-hide prompt
+      autoHidePrompt: false,
+      // Delay before auto-hide
+      autoHideDelay: 10000,
+      // Should display little arrow
+      arrowShow: true,
+      arrowSize: 5,
+      arrowPosition: 'top',
+      // Default color
+      color: 'red',
+      // Color mappings
+      colors: {
+        red: '#ee0101',
+        green: '#33be40',
+        black: '#393939',
+        blue: '#00f'
+      },
+      // Animation methods
+      showAnimation: 'fadeIn',
+      hideAnimation: 'fadeOut',
+      // Fade out duration while hiding the validations
+      showDuration: 200,
+      hideDuration: 600,
+      // Gap between prompt and element
+      gap: 0
+      //TODO add z-index watches
+      //parents:  { '.ui-dialog': 5001 }
+    };
 
-  var pluginOptions = {
-    // Auto-hide prompt
-    autoHidePrompt: false,
-    // Delay before auto-hide
-    autoHideDelay: 10000,
-    // Should display little arrow
-    showArrow: true,
-    // Animation methods
-    showAnimation: 'fadeIn',
-    hideAnimation: 'fadeOut',
-    // Fade out duration while hiding the validations
-    showDuration: 200,
-    hideDuration: 600,
-    // Gap between prompt and element
-    gap: 0
-    //TODO add z-index watches
-    //parents:  { '.ui-dialog': 5001 }
-  };
+
 
   // plugin helpers
   function CustomOptions(options){
@@ -48,21 +50,7 @@
   CustomOptions.prototype = pluginOptions;
 
 
-  function create(tag) {
-    return $(document.createElement(tag));
-  }
-
-
-  function execPromptEach(initialElements, text, userOptions) {
-    initialElements.each(function() {
-      execPrompt($(this), text, userOptions);
-    });
-  }
-
-  /**
-  * Builds or updates a prompt with the given information
-  */
-  function execPrompt(initialElement, text, userOptions) {
+  function Prompt(initialElement, text, userOptions) {
 
     var elementType = initialElement.attr("type"),
         element = getPromptElement(initialElement),
@@ -70,7 +58,6 @@
         options = (prompt && prompt.data("promptOptions")) || new CustomOptions(userOptions),
         showArrow = options.showArrow && elementType !== 'radio',
         content = null,
-        arrow = null,
         type = null;
 
     //shortcut special case
@@ -91,9 +78,8 @@
       prompt = buildPrompt(element, options);
     
     content = prompt.find('.' + className + 'Content:first');
-    arrow = prompt.find('.' + className + 'Arrow:first');
 
-    arrow.toggleClass('invisible', !showArrow);
+    //prompt.toggleClass("...", showArrow);
 
     //update text
     content.html(text.replace("\n","<br/>"));
@@ -115,6 +101,45 @@
     showPrompt(prompt,true);
   }
 
+  function create(tag) {
+    return $(document.createElement(tag));
+  }
+
+
+  function buildArrow(options) {
+
+    var dir = options.arrowPosition,
+        size = options.arrowSize,
+        alt = arrowDirs[dir],
+        arrow = create("div");
+
+    arrow.addClass(className+"Arrow").
+      css({ width: 0, height: 0 }).
+      css('border-'+alt, size + 'px solid ' + options.color).
+      css('z-index', '2 !important');
+
+    for(var d in arrowDirs)
+      if(d !== dir && d !== alt)
+        arrow.css('border-'+d, size + 'px solid transparent');
+
+    return arrow;
+  }
+
+
+  function execPromptEach(initialElements, text, userOptions) {
+    initialElements.each(function() {
+      execPrompt($(this), text, userOptions);
+    });
+  }
+
+  /**
+  * Builds or updates a prompt with the given information
+  */
+  function execPrompt(initialElement, text, userOptions) {
+
+
+  }
+
   //construct dom to represent prompt, done once
   function buildPrompt(element, options) {
 
@@ -129,10 +154,7 @@
 
     promptWrapper.append(prompt);
 
-    if(element.parent().css('position') === 'relative')
-      promptWrapper.css({position:'absolute'});
-
-    prompt.append(arrowHtml);
+    prompt.append(buildArrow(options));
     prompt.append(content);
 
     //add into dom

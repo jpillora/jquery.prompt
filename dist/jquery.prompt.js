@@ -6,13 +6,6 @@
 
 $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !important;overflow:visible;height:0;width:0;position:absolute;display:inline-block;vertical-align:top}\n" + 
 ".jqPrompt{z-index:1 !important;position:absolute;display:block;cursor:pointer;}\n" + 
-".jqPrompt .jqPromptArrow{z-index:2 !important}\n" + 
-".jqPrompt.redPopup .jqPromptContent{color:#ee0101;border:2px solid #ee0101}\n" + 
-".jqPrompt.redPopup .jqPromptArrow div{background:#ee0101}\n" + 
-".jqPrompt.greenPopup .jqPromptContent{color:#33be40;border:2px solid #33be40}\n" + 
-".jqPrompt.greenPopup .jqPromptArrow div{background:#33be40}\n" + 
-".jqPrompt.blackPopup .jqPromptContent{color:#393939;border:2px solid #393939}\n" + 
-".jqPrompt.blackPopup .jqPromptArrow div{background:#393939}\n" + 
 ".jqPrompt .jqPromptContent{background:#fff;position:relative;font-size:11px;box-shadow:0 0 6px #000;-moz-box-shadow:0 0 6px #000;-webkit-box-shadow:0 0 6px #000;padding:4px 10px 4px 8px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;white-space:nowrap}\n" + 
 ".jqPrompt .jqPromptArrow{opacity:.87;width:15px;margin:-2px 0 0 13px;position:relative;}\n" + 
 ".jqPrompt .jqPromptArrow.invisible div,.jqPrompt .jqPromptArrow div.invisible{background:none}\n" + 
@@ -23,44 +16,46 @@ $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !
 
 (function() {
 
-  var className = "jqPrompt";
-
   //plugin variables
-  var arrowHtml = (function() {
-    var i, a = [];
-    a.push('<div class="' + className + 'Arrow">');
-    //3 blank divs for IE bug
-    for(i = 0; i<3; ++i)
-      a.push('<div class="invisible"></div>');
-    for(i = 0; i<6; ++i) {
-      a.push('<div class="line');
-      if(i < 4) a.push(' shadow');
-      a.push('" style="width:');
-      a.push((2*i)+1);
-      a.push('px;"><!-- --></div>');
-    }
-    a.push('</div>');
-    return a.join('');
-  }());
+  var className = "jqPrompt",
+    arrowDirs = {
+      top: "bottom",
+      bottom: "top",
+      left: "right",
+      right: "left"
+    },
+    //overridable options
+    pluginOptions = {
+      // Auto-hide prompt
+      autoHidePrompt: false,
+      // Delay before auto-hide
+      autoHideDelay: 10000,
+      // Should display little arrow
+      arrowShow: true,
+      arrowSize: 5,
+      arrowPosition: 'top',
+      // Default color
+      color: 'red',
+      // Color mappings
+      colors: {
+        red: '#ee0101',
+        green: '#33be40',
+        black: '#393939',
+        blue: '#00f'
+      },
+      // Animation methods
+      showAnimation: 'fadeIn',
+      hideAnimation: 'fadeOut',
+      // Fade out duration while hiding the validations
+      showDuration: 200,
+      hideDuration: 600,
+      // Gap between prompt and element
+      gap: 0
+      //TODO add z-index watches
+      //parents:  { '.ui-dialog': 5001 }
+    };
 
-  var pluginOptions = {
-    // Auto-hide prompt
-    autoHidePrompt: false,
-    // Delay before auto-hide
-    autoHideDelay: 10000,
-    // Should display little arrow
-    showArrow: true,
-    // Animation methods
-    showAnimation: 'fadeIn',
-    hideAnimation: 'fadeOut',
-    // Fade out duration while hiding the validations
-    showDuration: 200,
-    hideDuration: 600,
-    // Gap between prompt and element
-    gap: 0
-    //TODO add z-index watches
-    //parents:  { '.ui-dialog': 5001 }
-  };
+
 
   // plugin helpers
   function CustomOptions(options){
@@ -70,21 +65,7 @@ $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !
   CustomOptions.prototype = pluginOptions;
 
 
-  function create(tag) {
-    return $(document.createElement(tag));
-  }
-
-
-  function execPromptEach(initialElements, text, userOptions) {
-    initialElements.each(function() {
-      execPrompt($(this), text, userOptions);
-    });
-  }
-
-  /**
-  * Builds or updates a prompt with the given information
-  */
-  function execPrompt(initialElement, text, userOptions) {
+  function Prompt(initialElement, text, userOptions) {
 
     var elementType = initialElement.attr("type"),
         element = getPromptElement(initialElement),
@@ -92,7 +73,6 @@ $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !
         options = (prompt && prompt.data("promptOptions")) || new CustomOptions(userOptions),
         showArrow = options.showArrow && elementType !== 'radio',
         content = null,
-        arrow = null,
         type = null;
 
     //shortcut special case
@@ -113,9 +93,8 @@ $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !
       prompt = buildPrompt(element, options);
     
     content = prompt.find('.' + className + 'Content:first');
-    arrow = prompt.find('.' + className + 'Arrow:first');
 
-    arrow.toggleClass('invisible', !showArrow);
+    //prompt.toggleClass("...", showArrow);
 
     //update text
     content.html(text.replace("\n","<br/>"));
@@ -137,6 +116,45 @@ $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !
     showPrompt(prompt,true);
   }
 
+  function create(tag) {
+    return $(document.createElement(tag));
+  }
+
+
+  function buildArrow(options) {
+
+    var dir = options.arrowPosition,
+        size = options.arrowSize,
+        alt = arrowDirs[dir],
+        arrow = create("div");
+
+    arrow.addClass(className+"Arrow").
+      css({ width: 0, height: 0 }).
+      css('border-'+alt, size + 'px solid ' + options.color).
+      css('z-index', '2 !important');
+
+    for(var d in arrowDirs)
+      if(d !== dir && d !== alt)
+        arrow.css('border-'+d, size + 'px solid transparent');
+
+    return arrow;
+  }
+
+
+  function execPromptEach(initialElements, text, userOptions) {
+    initialElements.each(function() {
+      execPrompt($(this), text, userOptions);
+    });
+  }
+
+  /**
+  * Builds or updates a prompt with the given information
+  */
+  function execPrompt(initialElement, text, userOptions) {
+
+
+  }
+
   //construct dom to represent prompt, done once
   function buildPrompt(element, options) {
 
@@ -151,10 +169,7 @@ $(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !
 
     promptWrapper.append(prompt);
 
-    if(element.parent().css('position') === 'relative')
-      promptWrapper.css({position:'absolute'});
-
-    prompt.append(arrowHtml);
+    prompt.append(buildArrow(options));
     prompt.append(content);
 
     //add into dom
