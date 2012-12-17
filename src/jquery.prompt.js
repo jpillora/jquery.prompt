@@ -1,9 +1,12 @@
-$(function() {
+
+(function() {
+
+  var className = "jqPrompt";
 
   //plugin variables
   var arrowHtml = (function() {
     var i, a = [];
-    a.push('<div class="formErrorArrow">');
+    a.push('<div class="' + className + 'Arrow">');
     //3 blank divs for IE bug
     for(i = 0; i<3; ++i)
       a.push('<div class="invisible"></div>');
@@ -87,8 +90,8 @@ $(function() {
     if(!prompt)
       prompt = buildPrompt(element, options);
     
-    content = prompt.find('.formErrorContent:first');
-    arrow = prompt.find('.formErrorArrow:first');
+    content = prompt.find('.' + className + 'Content:first');
+    arrow = prompt.find('.' + className + 'Arrow:first');
 
     arrow.toggleClass('invisible', !showArrow);
 
@@ -115,9 +118,9 @@ $(function() {
   //construct dom to represent prompt, done once
   function buildPrompt(element, options) {
 
-    var promptWrapper = create('div').addClass("formErrorWrapper"),
-        prompt = create('div').addClass("formError").hide(),
-        content = create('div').addClass("formErrorContent");
+    var promptWrapper = create('div').addClass(className + "Wrapper"),
+        prompt = create('div').addClass(className).hide(),
+        content = create('div').addClass(className + "Content");
 
     //cache in element
     element.data("promptElement", prompt);
@@ -197,9 +200,11 @@ $(function() {
   }
 
 
-  //permanent hide listener
-  $(document).on("click", ".formError", function() {
-    showPrompt($(this),false);
+  //when ready, bind permanent hide listener
+  $(function() {
+    $(document).on("click", "." + className, function() {
+      showPrompt($(this),false);
+    });
   });
 
   //public interface
@@ -213,4 +218,5 @@ $(function() {
     return $(this);
   };
 
-});
+
+}());

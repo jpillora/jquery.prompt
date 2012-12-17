@@ -1,13 +1,34 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-14
+/*! jQuery Prompt - v1.0.0 - 2012-12-17
 * https://github.com/jpillora/jquery.prompt
 * Copyright (c) 2012 Jaime Pillora; Licensed MIT */
 
-$(function() {
+(function() {
+
+$(function() { $("head").append($("<style/>").html(".jqPromptWrapper{z-index:1 !important;overflow:visible;height:0;width:0;position:absolute;display:inline-block;vertical-align:top}\n" + 
+".jqPrompt{z-index:1 !important;position:absolute;display:block;cursor:pointer;}\n" + 
+".jqPrompt .jqPromptArrow{z-index:2 !important}\n" + 
+".jqPrompt.redPopup .jqPromptContent{color:#ee0101;border:2px solid #ee0101}\n" + 
+".jqPrompt.redPopup .jqPromptArrow div{background:#ee0101}\n" + 
+".jqPrompt.greenPopup .jqPromptContent{color:#33be40;border:2px solid #33be40}\n" + 
+".jqPrompt.greenPopup .jqPromptArrow div{background:#33be40}\n" + 
+".jqPrompt.blackPopup .jqPromptContent{color:#393939;border:2px solid #393939}\n" + 
+".jqPrompt.blackPopup .jqPromptArrow div{background:#393939}\n" + 
+".jqPrompt .jqPromptContent{background:#fff;position:relative;font-size:11px;box-shadow:0 0 6px #000;-moz-box-shadow:0 0 6px #000;-webkit-box-shadow:0 0 6px #000;padding:4px 10px 4px 8px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;white-space:nowrap}\n" + 
+".jqPrompt .jqPromptArrow{opacity:.87;width:15px;margin:-2px 0 0 13px;position:relative;}\n" + 
+".jqPrompt .jqPromptArrow.invisible div,.jqPrompt .jqPromptArrow div.invisible{background:none}\n" + 
+".jqPrompt .jqPromptArrow div{border:none;font-size:0;height:1px;margin:0 auto;line-height:0;font-size:0;display:block;}\n" + 
+".jqPrompt .jqPromptArrow div.shadow{box-shadow:0 2px 6px #444;-moz-box-shadow:0 2px 6px #444;-webkit-box-shadow:0 2px 6px #444}\n" + 
+"body[dir='rtl'] .jqPrompt .jqPromptArrow,body.rtl .jqPrompt .jqPromptArrow{margin:-2px 13px 0 0}\n" + 
+"\n")); });
+
+(function() {
+
+  var className = "jqPrompt";
 
   //plugin variables
   var arrowHtml = (function() {
     var i, a = [];
-    a.push('<div class="formErrorArrow">');
+    a.push('<div class="' + className + 'Arrow">');
     //3 blank divs for IE bug
     for(i = 0; i<3; ++i)
       a.push('<div class="invisible"></div>');
@@ -91,8 +112,8 @@ $(function() {
     if(!prompt)
       prompt = buildPrompt(element, options);
     
-    content = prompt.find('.formErrorContent:first');
-    arrow = prompt.find('.formErrorArrow:first');
+    content = prompt.find('.' + className + 'Content:first');
+    arrow = prompt.find('.' + className + 'Arrow:first');
 
     arrow.toggleClass('invisible', !showArrow);
 
@@ -119,9 +140,9 @@ $(function() {
   //construct dom to represent prompt, done once
   function buildPrompt(element, options) {
 
-    var promptWrapper = create('div').addClass("formErrorWrapper"),
-        prompt = create('div').addClass("formError").hide(),
-        content = create('div').addClass("formErrorContent");
+    var promptWrapper = create('div').addClass(className + "Wrapper"),
+        prompt = create('div').addClass(className).hide(),
+        content = create('div').addClass(className + "Content");
 
     //cache in element
     element.data("promptElement", prompt);
@@ -201,9 +222,11 @@ $(function() {
   }
 
 
-  //permanent hide listener
-  $(document).on("click", ".formError", function() {
-    showPrompt($(this),false);
+  //when ready, bind permanent hide listener
+  $(function() {
+    $(document).on("click", "." + className, function() {
+      showPrompt($(this),false);
+    });
   });
 
   //public interface
@@ -217,4 +240,7 @@ $(function() {
     return $(this);
   };
 
-});
+
+}());
+
+}());

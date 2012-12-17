@@ -2,8 +2,6 @@
 
 <!-- jQuery Prompt -->
 <script src="dist/jquery.prompt.js"></script>
-<!-- jQuery Prompt stylesheet -->
-<link href="dist/jquery.prompt.css" rel="stylesheet" type="text/css" >
  
 <form>
   <input id="one" value="42" data-validate="number"/>
@@ -16,10 +14,10 @@
 
     setTimeout(function() {
       $("#one").prompt("hello");
-    }, 500);
+    }, 300);
     setTimeout(function() {
       $.prompt($("#two"),"world","load");
-    }, 1500);
+    }, 600);
 
   });
 </script>

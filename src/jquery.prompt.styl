@@ -1,4 +1,4 @@
-.formErrorWrapper {
+.jqPromptWrapper {
   z-index: 1 !important;
   overflow: visible;
   height: 0px;
@@ -8,10 +8,10 @@
   vertical-align: top;
 }
 
-.formError {
+.jqPrompt {
   /* Z-INDEX */
   z-index: 1 !important;
-  .formErrorArrow { z-index: 2 !important; }
+  .jqPromptArrow { z-index: 2 !important; }
 
   position: absolute;
   display: block;
@@ -19,50 +19,38 @@
 
   &.redPopup {
     $red = #ee0101;
-    .formErrorContent {
+    .jqPromptContent {
       color: $red;
       border: 2px solid $red;
     }
-    .formErrorArrow div {
+    .jqPromptArrow div {
       background: $red;
     }
   }
 
   &.greenPopup {
     $green = #33be40;
-    .formErrorContent {
+    .jqPromptContent {
       color: $green;
       border: 2px solid $green;
     }
-    .formErrorArrow div {
+    .jqPromptArrow div {
       background: $green;
     }
   }
 
   &.blackPopup {
     $black = #393939;
-    .formErrorContent {
+    .jqPromptContent {
       color: $black;
       border: 2px solid $black;
     }
-    .formErrorArrow div {
+    .jqPromptArrow div {
       background: $black;
     }
   }
 
-  .inputContainer {
-    position: relative;
-    float: left;
-  }
-
-  .ajaxSubmit {
-    padding: 20px;
-    background: #55ea55;
-    border: 1px solid #999;
-    display: none
-  }
-
-  .formErrorContent {
+  .jqPromptContent {
     background: #fff;
     position:relative;
     font-size: 11px;
@@ -76,7 +64,7 @@
     white-space: nowrap;
   }
 
-  .formErrorArrow {
+  .jqPromptArrow {
     opacity: 0.87;
     width: 15px;
     margin: -2px 0 0 13px;
@@ -104,7 +92,7 @@
 
 }
 
-body[dir='rtl'] .formError .formErrorArrow,
-body.rtl .formError .formErrorArrow {
+body[dir='rtl'] .jqPrompt .jqPromptArrow,
+body.rtl .jqPrompt .jqPromptArrow {
   margin: -2px 13px 0 0;
 }

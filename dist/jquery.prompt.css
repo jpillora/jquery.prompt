@@ -1,17 +1,15 @@
-.formErrorWrapper{z-index:1 !important;overflow:visible;height:0;width:0;position:absolute;display:inline-block;vertical-align:top}
-.formError{z-index:1 !important;position:absolute;display:block;cursor:pointer;}
-.formError .formErrorArrow{z-index:2 !important}
-.formError.redPopup .formErrorContent{color:#ee0101;border:2px solid #ee0101}
-.formError.redPopup .formErrorArrow div{background:#ee0101}
-.formError.greenPopup .formErrorContent{color:#33be40;border:2px solid #33be40}
-.formError.greenPopup .formErrorArrow div{background:#33be40}
-.formError.blackPopup .formErrorContent{color:#393939;border:2px solid #393939}
-.formError.blackPopup .formErrorArrow div{background:#393939}
-.formError .inputContainer{position:relative;float:left}
-.formError .ajaxSubmit{padding:20px;background:#55ea55;border:1px solid #999;display:none}
-.formError .formErrorContent{background:#fff;position:relative;font-size:11px;box-shadow:0 0 6px #000;-moz-box-shadow:0 0 6px #000;-webkit-box-shadow:0 0 6px #000;padding:4px 10px 4px 8px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;white-space:nowrap}
-.formError .formErrorArrow{opacity:.87;width:15px;margin:-2px 0 0 13px;position:relative;}
-.formError .formErrorArrow.invisible div,.formError .formErrorArrow div.invisible{background:none}
-.formError .formErrorArrow div{border:none;font-size:0;height:1px;margin:0 auto;line-height:0;font-size:0;display:block;}
-.formError .formErrorArrow div.shadow{box-shadow:0 2px 6px #444;-moz-box-shadow:0 2px 6px #444;-webkit-box-shadow:0 2px 6px #444}
-body[dir='rtl'] .formError .formErrorArrow,body.rtl .formError .formErrorArrow{margin:-2px 13px 0 0}
+.jqPromptWrapper{z-index:1 !important;overflow:visible;height:0;width:0;position:absolute;display:inline-block;vertical-align:top}
+.jqPrompt{z-index:1 !important;position:absolute;display:block;cursor:pointer;}
+.jqPrompt .jqPromptArrow{z-index:2 !important}
+.jqPrompt.redPopup .jqPromptContent{color:#ee0101;border:2px solid #ee0101}
+.jqPrompt.redPopup .jqPromptArrow div{background:#ee0101}
+.jqPrompt.greenPopup .jqPromptContent{color:#33be40;border:2px solid #33be40}
+.jqPrompt.greenPopup .jqPromptArrow div{background:#33be40}
+.jqPrompt.blackPopup .jqPromptContent{color:#393939;border:2px solid #393939}
+.jqPrompt.blackPopup .jqPromptArrow div{background:#393939}
+.jqPrompt .jqPromptContent{background:#fff;position:relative;font-size:11px;box-shadow:0 0 6px #000;-moz-box-shadow:0 0 6px #000;-webkit-box-shadow:0 0 6px #000;padding:4px 10px 4px 8px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;white-space:nowrap}
+.jqPrompt .jqPromptArrow{opacity:.87;width:15px;margin:-2px 0 0 13px;position:relative;}
+.jqPrompt .jqPromptArrow.invisible div,.jqPrompt .jqPromptArrow div.invisible{background:none}
+.jqPrompt .jqPromptArrow div{border:none;font-size:0;height:1px;margin:0 auto;line-height:0;font-size:0;display:block;}
+.jqPrompt .jqPromptArrow div.shadow{box-shadow:0 2px 6px #444;-moz-box-shadow:0 2px 6px #444;-webkit-box-shadow:0 2px 6px #444}
+body[dir='rtl'] .jqPrompt .jqPromptArrow,body.rtl .jqPrompt .jqPromptArrow{margin:-2px 13px 0 0}
