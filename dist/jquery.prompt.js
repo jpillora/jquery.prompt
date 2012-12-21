@@ -68,6 +68,11 @@
   Prompt = (function() {
 
     function Prompt(elem, node, options) {
+      if ($.type(options) === 'string') {
+        options = {
+          color: options
+        };
+      }
       this.options = new Options($.isPlainObject(options) ? options : {});
       this.elementType = elem.attr('type');
       this.originalElement = elem;
@@ -180,7 +185,10 @@
     };
 
     Prompt.prototype.getColor = function() {
-      return this.options.colors[this.options.color] || this.options.color;
+      var c;
+      c = this.options.colors[this.options.color] || this.options.color;
+      console.log(c);
+      return c;
     };
 
     Prompt.prototype.run = function(node, options) {

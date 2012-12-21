@@ -24,7 +24,7 @@ The following HTML:
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <!-- jQuery Prompt -->
-<script src="//raw.github.com/jpillora/jquery.prompt/master/dist/jquery.prompt.min.js"></script>
+<script src="//raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.min.js"></script>
  
 <form>
   <input id="one" value="42" data-validate="number"/>
@@ -42,7 +42,7 @@ The following HTML:
 
 Should result in:
 
-![basic usage result](//raw.github.com/jpillora/jquery.async.validator/master/demo/demos/quickstart.png)
+![basic usage result](//raw.github.com/jpillora/jquery.async.validator/gh-pages/demo/demos/quickstart.png)
 
 Demos
 ---
@@ -54,7 +54,6 @@ API
 `$.prompt(element, text, options)`
 
 `$('selector').prompt(text, options)`
-
 
 Options:
 ---
@@ -83,8 +82,8 @@ v1.0.0
 
 * Released !
 
-  [Development Version]: http://raw.github.com/jpillora/jquery.prompt/master/dist/jquery.prompt.js
-  [Production Version]: http://raw.github.com/jpillora/jquery.prompt/master/dist/jquery.prompt.min.js
+  [Development Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.js
+  [Production Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages3/dist/jquery.prompt.min.js
 
 
 

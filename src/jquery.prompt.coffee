@@ -61,6 +61,7 @@ class Prompt
   
   #setup instance variables
   constructor: (elem, node, options) ->
+    options = {color: options} if $.type(options) is 'string'
     @options = new Options if $.isPlainObject(options) then options else {}
     @elementType = elem.attr('type')
     @originalElement = elem
@@ -156,7 +157,9 @@ class Prompt
     }
 
   getColor: ->
-    @options.colors[@options.color] or @options.color
+    c = @options.colors[@options.color] or @options.color
+    console.log c
+    c
 
   #run plugin
   run: (node, options) ->
