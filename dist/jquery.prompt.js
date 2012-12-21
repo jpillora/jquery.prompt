@@ -185,10 +185,7 @@
     };
 
     Prompt.prototype.getColor = function() {
-      var c;
-      c = this.options.colors[this.options.color] || this.options.color;
-      console.log(c);
-      return c;
+      return this.options.colors[this.options.color] || this.options.color;
     };
 
     Prompt.prototype.run = function(node, options) {
@@ -242,10 +239,6 @@
     });
   });
 
-  if ($[pluginName] != null) {
-    return alert("$." + pluginName + " already defined");
-  }
-
   $[pluginName] = function(elem, node, options) {
     return $(elem)[pluginName](node, options);
   };
@@ -253,10 +246,6 @@
   $[pluginName].options = function(options) {
     return $.extend(pluginOptions, options);
   };
-
-  if ($.fn[pluginName] != null) {
-    return alert("$.fn" + pluginName + " already defined");
-  }
 
   $.fn[pluginName] = function(node, options) {
     return $(this).each(function() {

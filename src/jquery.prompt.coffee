@@ -157,9 +157,7 @@ class Prompt
     }
 
   getColor: ->
-    c = @options.colors[@options.color] or @options.color
-    console.log c
-    c
+    @options.colors[@options.color] or @options.color
 
   #run plugin
   run: (node, options) ->
@@ -207,7 +205,7 @@ $ ->
     inst.showPrompt false if inst?
 
 # publicise jquery plugin
-return alert "$.#{pluginName} already defined" if $[pluginName]?
+# return alert "$.#{pluginName} already defined" if $[pluginName]?
 # $.pluginName( { ...  } ) changes options for all instances
 $[pluginName] = (elem, node, options) ->
   $(elem)[pluginName](node, options)
@@ -217,7 +215,7 @@ $[pluginName].options = (options) -> $.extend pluginOptions, options
 
 # $( ... ).pluginName( { .. } ) creates a cached instance on each
 # selected item with custom options for just that instance
-return alert "$.fn#{pluginName} already defined" if $.fn[pluginName]?
+# return alert "$.fn#{pluginName} already defined" if $.fn[pluginName]?
 $.fn[pluginName] = (node, options) ->
   $(@).each ->
     inst = getAnchorElement($(@)).data pluginName
