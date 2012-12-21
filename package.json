@@ -5,6 +5,7 @@
     "grunt-contrib-stylus",
     "grunt-contrib-uglify",
     "grunt-contrib-watch",
+    "grunt-contrib-coffee",
     "grunt-mocha"
   ]
 }

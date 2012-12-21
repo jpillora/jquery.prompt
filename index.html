@@ -16,8 +16,11 @@
       $("#one").prompt("hello");
     }, 300);
     setTimeout(function() {
-      $.prompt($("#two"),"world","load");
+      $.prompt($("#two"),"world", {color: 'black'});
     }, 600);
+    setTimeout(function() {
+      $.prompt($("#two"),$("<strong/>").html("WORLD!"), {color: 'blue'});
+    }, 2800);
 
   });
 </script>
