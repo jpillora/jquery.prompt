@@ -83,7 +83,7 @@ v1.0.0
 * Released !
 
   [Development Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.js
-  [Production Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages3/dist/jquery.prompt.min.js
+  [Production Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.min.js
 
 
 
