@@ -57,7 +57,7 @@ API
 
 Options:
 ---
-*To Do*
+*Todo*
 
 Conceptual Overview
 ---
