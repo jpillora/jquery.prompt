@@ -1,6 +1,6 @@
 jQuery Prompt
 =====
-v1.0.0
+v0.0.1
 
 *Note: These docs are a work in progress.*
 
@@ -24,18 +24,18 @@ The following HTML:
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <!-- jQuery Prompt -->
-<script src="//raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.min.js"></script>
+<script src="http://jpillora.github.com/jquery.rest/dist/jquery.rest.min.js"></script>
  
 <form>
-  <input id="one" value="42" data-validate="number"/>
-  <input id="two" value="abc" data-validate="number"/>
+  <input id="one" value="42"/>
+  <input id="two" value="abc"/>
   <input type="submit"/>
 </form>
 
 <script>
   $(function() {
-    $("one").prompt("hello");
-    $("two").prompt("world");
+    $("#one").prompt("hello");
+    $("#two").prompt("world");
   });
 </script>
 ```
@@ -57,7 +57,7 @@ API
 
 Options:
 ---
-**To Write**
+*To Do*
 
 Conceptual Overview
 ---
@@ -78,12 +78,14 @@ Issues and Pull-requests welcome, though please add tests. To build and test: `c
 Change Log
 ---
 
-v1.0.0
+v0.0.1
+
+* Added to jQuery plugin repo
 
 * Released !
 
-  [Development Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.js
-  [Production Version]: http://raw.github.com/jpillora/jquery.prompt/gh-pages/dist/jquery.prompt.min.js
+  [Development Version]: http://jpillora.github.com/jquery.rest/dist/jquery.rest.js
+  [Production Version]: http://jpillora.github.com/jquery.rest/dist/jquery.rest.min.js
 
 
 

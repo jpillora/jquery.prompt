@@ -1,0 +1,27 @@
+{
+  "name": "prompt",
+  "version": "0.0.1",
+  "title": "prompt",
+  "description": "A jQuery plugin for creating stylised text prompts on DOM elements.",
+  "bugs": "https://github.com/jpillora/jquery.prompt/issues",
+  "homepage": "https://github.com/jpillora/jquery.prompt",
+  "docs": "https://github.com/jpillora/jquery.prompt#jquery-prompt",
+  "download": "https://github.com/jpillora/jquery.prompt#downloads",
+  "author": {
+    "name": "Jaime Pillora"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "keywords": [
+    "rest",
+    "client",
+    "ajax"
+  ],
+  "dependencies": {
+    "jquery": ">=1.5"
+  }
+}
