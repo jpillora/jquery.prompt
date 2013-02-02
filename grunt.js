@@ -76,7 +76,6 @@ module.exports = function(grunt) {
   // Plugins
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-coffee');
-  grunt.loadNpmTasks('grunt-mocha');
 
   // Default task.
   grunt.registerTask('default', 'coffee concat lint min');

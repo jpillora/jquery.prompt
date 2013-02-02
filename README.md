@@ -24,7 +24,7 @@ The following HTML:
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <!-- jQuery Prompt -->
-<script src="http://jpillora.github.com/jquery.rest/dist/jquery.rest.min.js"></script>
+<script src="http://jpillora.github.com/jquery.prompt/dist/jquery.prompt.min.js"></script>
  
 <form>
   <input id="one" value="42"/>
@@ -42,7 +42,7 @@ The following HTML:
 
 Should result in:
 
-![basic usage result](//raw.github.com/jpillora/jquery.async.validator/gh-pages/demo/demos/quickstart.png)
+![basic usage result](http://jpillora.github.com/jquery.prompt/docs/screeny.png)
 
 Demos
 ---
@@ -84,8 +84,8 @@ v0.0.1
 
 * Released !
 
-  [Development Version]: http://jpillora.github.com/jquery.rest/dist/jquery.rest.js
-  [Production Version]: http://jpillora.github.com/jquery.rest/dist/jquery.rest.min.js
+  [Development Version]: http://jpillora.github.com/jquery.prompt/dist/jquery.prompt.js
+  [Production Version]: http://jpillora.github.com/jquery.prompt/dist/jquery.prompt.min.js
 
 
 

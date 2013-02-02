@@ -1,6 +1,6 @@
-/*! jQuery Prompt - v1.0.0 - 2012-12-21
+/*! jQuery Prompt - v0.0.1 - 2013-02-02
 * https://github.com/jpillora/jquery.prompt
-* Copyright (c) 2012 Jaime Pillora; Licensed MIT */
+* Copyright (c) 2013 Jaime Pillora; Licensed MIT */
 
 (function() {
   'use strict';
