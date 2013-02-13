@@ -1,8 +1,14 @@
 {
   "name": "jquery.prompt",
-  "version": "0.0.1",
-  "dependencies":[
-    "grunt-contrib-watch",
-    "grunt-contrib-coffee"
-  ]
+  "version": "0.0.2",
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-watch": "~0.1.4",
+    "grunt-contrib-uglify": "~0.1.1rc6",
+    "grunt-mocha": "~0.2.1",
+    "grunt-contrib-jshint": "~0.1.0",
+    "grunt-contrib-concat": "~0.1.1",
+    "grunt-contrib-coffee": "~0.4.0rc7",
+    "grunt-wrap": "~0.2.0"
+  }
 }

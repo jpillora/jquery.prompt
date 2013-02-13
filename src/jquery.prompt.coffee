@@ -150,7 +150,7 @@ class Prompt
     promptPosition = @prompt.parent().position()
     height = @elem.outerHeight()
     left = elementPosition.left - promptPosition.left
-    height += (elementPosition.top - promptPosition.top)  unless $.browser.msie
+    height += (elementPosition.top - promptPosition.top)  unless navigator.userAgent.match /MSIE/
     return {
       top: height + @options.gap
       left: left
