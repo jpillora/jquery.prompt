@@ -89,3 +89,6 @@ v0.0.1
 
 
 
+<!-- Tracker -->
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/2ec87aabeaf1ff78eef8883aae18577c "githalytics.com")](http://githalytics.com/github.com/jpillora)
+
