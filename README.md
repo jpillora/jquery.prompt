@@ -1,8 +1,35 @@
-jQuery Prompt
-=====
-v0.0.1
 
-*Note: These docs are a work in progress.*
+
+*Note: This plugin has been rewritten and vastly improved.*
+
+
+Notify.js
+=====
+
+> A simple, versatile notification library
+
+
+See demos and full documentation at:
+
+## http://notifyjs.com/
+
+
+However, if you still want this old thing, keep scrolling...
+
+.
+
+.
+
+.
+
+.
+
+
+
+
+
+### jQuery Prompt
+
 
 Summary
 ---
@@ -70,6 +97,8 @@ Todo
 * Left Top Right Positioning
 * More styles
   * Bootstrap styles
+
+*Note: All of these have been implemented in the rewrite.*
 
 Contributing
 ---
